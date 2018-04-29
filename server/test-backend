@@ -1,0 +1,64 @@
+#! /usr/bin/env bash
+set -e
+
+function SECTION() { echo; echo "###" "$@"; echo; }
+function CURL() { echo '`' curl "$@" '`'; curl "$@"; echo; }
+
+# Start a server with:
+# DEBUG='*' npm start
+
+prefix="http://localhost:3000/api/v0"
+
+SECTION Version number
+CURL -X GET \
+$prefix/version
+
+SECTION Adding a book
+CURL -X POST \
+  -d title="It" \
+  -d author="Stephen King" \
+  -d numPages=390 \
+  -d pubDate="03/12/1987" \
+$prefix/admin/book
+
+SECTION Adding another book
+CURL -X POST \
+  -d title="The Green Mile" \
+  -d author="Stephen King" \
+$prefix/admin/book
+
+SECTION Adding patron
+CURL -X PUT \
+  -d name="Bookworm" \
+$prefix/admin/patron
+
+SECTION Adding patron
+CURL -X PUT \
+  -d name="I'm just here to use the bathroom" \
+$prefix/admin/patron
+
+SECTION Getting patron info
+CURL -X GET \
+$prefix/admin/patron/1
+
+SECTION Listing books
+CURL -X GET \
+$prefix/books/search/
+
+SECTION Checking out a book
+CURL -X GET \
+  -d patronID=1 \
+$prefix/book/borrow/1
+
+SECTION Listing books
+CURL -X GET \
+$prefix/books/search/
+
+SECTION Getting patron info
+CURL -X GET \
+$prefix/admin/patron/1
+
+SECTION Checking out an already-checked-out book
+CURL -X GET \
+  -d patronID=2 \
+$prefix/book/borrow/1

@@ -1,0 +1,12 @@
+
+{"tables":
+{ "API_keys":	{"foreignKeys":	{"staffID": "Staff.staffID"}}
+, "Authors":	{"primaryKey":	"authorID"}
+, "Books":	{"primaryKey":	"bookID", "foreignKeys":	{"authorID": "Authors.authorID"}}
+, "Branches":	{"primaryKey":	"branchID"}
+, "Checkouts":	{"foreignKeys":	{"bookID": "Books.bookID", "patronID": "Patrons.patronID"}}
+, "Fines":	{"foreignKeys":	{"bookID": "Books.bookID", "patronID": "Patrons.patronID"}}
+, "Holds":	{"foreignKeys":	{"bookID": "Books.bookID", "patronID": "Patrons.patronID"}}
+, "Patrons":	{"primaryKey":	"patronID"}
+, "Staff":	{"primaryKey":	"staffID"}
+} }
